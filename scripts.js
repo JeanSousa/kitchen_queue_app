@@ -19,7 +19,7 @@ const prefixUrl = "http://127.0.0.1:5000/api";
 
 /*
     --------------------------------------------------------------------------------------
-    Function to get the list of products from the server via GET request
+    Function to create a product from the server via POST request
     --------------------------------------------------------------------------------------
 */
 const createProduct = async () => {
@@ -27,23 +27,41 @@ const createProduct = async () => {
     let name = document.getElementById('product-name').value
     let value = document.getElementById('product-value').value
 
+    if(!name || !value) {
+        alert('Preencha todos os campos!');
+        return
+    }
+
     const formData = new FormData();
     formData.append('name', name);
     formData.append('value', value);
 
     try {
-        let response = await fetch(
-            url, 
+        let response = await fetch(url, 
             {
                 method: 'post',
                 body: formData,
             }
         )
 
-        console.log(response)
-
-
+        const data = await response.json()
+        
+        if (data.message) {
+            alert(data.message)
+            return
+        }
+        
+        alert("Produto inserido com sucesso!")
+        let {id, name, value} = data
+    
+        document.getElementById('product-name').value = ""
+        document.getElementById('product-value').value = ""
+    
+        insrtProductItem(id, name, value)
     } catch (error) {
+        insrtProductItem('', name, value)
+        document.getElementById('product-name').value = ""
+        document.getElementById('product-value').value = ""
         console.log(error)
     }
 
@@ -103,6 +121,14 @@ const deleteProduct = async (id) => {
     }
 }
 
+/*
+    --------------------------------------------------------------------------------------
+    Function to edit product 
+    --------------------------------------------------------------------------------------
+*/
+const editProduct = (id) => {
+    console.log(`Edit product ${id}`);
+}
 
 
 
