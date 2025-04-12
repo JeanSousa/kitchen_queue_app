@@ -21,11 +21,15 @@ body {
     visibility: hidden;
 }
 
-#main-content {
+/* #main-content {
     margin-left: 250px;
     transition: margin-left 0.3s;
-}
+} */
 
 #sidebar.collapsed~#main-content {
     margin-left: 80px;
+}
+
+#my-table {
+    width: 80%;
 }
