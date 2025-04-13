@@ -59,7 +59,8 @@ const createProduct = async () => {
     
         insrtProductItem(id, name, value)
     } catch (error) {
-        insrtProductItem('', name, value)
+        alert('Erro ao se comunicar com a base de dados!')
+        insrtProductItem(null, name, value)
         document.getElementById('product-name').value = ""
         document.getElementById('product-value').value = ""
         console.log(error)
@@ -94,6 +95,7 @@ const listProducts = async () => {
         products.forEach(item => {insrtProductItem(item.id, item.name, item.value)})
 
     } catch (error) {
+        alert('Erro ao se comunicar com a base de dados!')
         console.log(error)
     }
 }
@@ -117,17 +119,76 @@ const deleteProduct = async (id) => {
 
         document.getElementById(`product-${id}`).remove()    
     } catch (error) {
+        alert('Erro ao se comunicar com a base de dados!')
+        document.getElementById(`product-${id}`).remove()
         console.log(error)
     }
 }
 
 /*
     --------------------------------------------------------------------------------------
-    Function to edit product 
+    Function to edit product show product that should be updated 
     --------------------------------------------------------------------------------------
 */
-const editProduct = (id) => {
-    console.log(`Edit product ${id}`);
+const editProduct = async (id) => {
+    let url = `${prefixUrl}/products/${id}`;
+
+    try {
+        let response = await fetch(url, {method: 'get'})
+        let product = await response.json()
+
+        if(!product) {
+            alert('Produto não encontrado');
+        }
+
+        document.getElementById('edit-product-id').value = product.id
+        document.getElementById('edit-product-name').value = product.name
+        document.getElementById('edit-product-value').value = product.value
+
+        const modal = new bootstrap.Modal(document.getElementById('product-modal'));
+        modal.show();
+
+    } catch (error) {
+        alert('Erro ao se comunicar com a base de dados!')
+        console.log(error)
+    }
+}
+
+const updateProduct = async () => {
+    let id = document.getElementById('edit-product-id').value
+    let name = document.getElementById('edit-product-name').value
+    let value = document.getElementById('edit-product-value').value
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('value', value);
+
+    let url = `${prefixUrl}/products/${id}`;
+
+    try {
+        let response = await fetch(url, 
+            {
+                method: 'put',
+                body: formData
+            }
+        )
+
+        let data = await response.json()
+
+        if (data.name) {
+            alert(`Produto ${data.name} atualizado com sucesso!`);
+            document.getElementById(`product-${id}`).remove()
+            insrtProductItem(data.id, data.name, data.value)
+        } 
+
+        let productModal = document.getElementById('product-modal');
+        let modal = bootstrap.Modal.getOrCreateInstance(productModal);
+        modal.hide();
+    } catch (error) {
+        alert('Erro ao se comunicar com a base de dados!')
+        document.getElementById(`product-${id}`).remove()
+        console.log(error)
+    }
 }
 
 
@@ -136,12 +197,12 @@ const editProduct = (id) => {
 
 
 
-const insrtProductItem = (id, name, value) => {
+const insrtProductItem = (id = 0, name, value) => {
     const table = document.getElementById('my-table')
         .getElementsByTagName('tbody')[0];
 
     const row = table.insertRow();
-    row.setAttribute("id", `product-${id}`); // ID único para a linha
+    row.setAttribute("id", `product-${id}`);
 
     // Insert name and value in table
     [name, value].forEach(content => {
@@ -160,3 +221,4 @@ const insrtProductItem = (id, name, value) => {
         </button>
     `;
 };
+

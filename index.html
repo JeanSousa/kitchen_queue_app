@@ -15,6 +15,7 @@
         <!-- Sidebar -->
         <div id="sidebar" class="bg-dark text-white vh-100 p-3">
             <button class="btn btn-md btn-outline-light mb-3" onclick="toggleSidebar()">☰</button>
+            <span class="p-1">Kitchen Queue</span>
             <ul class="nav nav-pills flex-column">
 
                 <li class="nav-item">
@@ -57,31 +58,64 @@
             <div class="container-fluid mt-4 d-none" id="product-container">
                 <h1>Produtos</h1>
                 <br>
-                    <form id="product-form" class="mt-4">
-                        <div class="mb-3">
-                            <label for="product-name" class="form-label">Nome do Produto</label>
-                            <input type="text" class="form-control" id="product-name" placeholder="Digite o nome do produto" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="product-value" class="form-label">Valor (R$)</label>
-                            <input type="number" step="0.01" class="form-control" id="product-value" placeholder="Digite o valor do produto" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary mb-3" onclick="createProduct()">Salvar Produto</button>
-                    </form>
-    
-                    <table class="table table-hover table-bordered" id="my-table">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Valor</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body"></tbody>
-                    </table>
+                <form id="product-form" class="mt-4">
+                    <div class="mb-3">
+                        <label for="product-name" class="form-label">Nome do Produto</label>
+                        <input type="text" class="form-control" id="product-name" placeholder="Digite o nome do produto"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="product-value" class="form-label">Valor (R$)</label>
+                        <input type="number" step="0.01" class="form-control" id="product-value"
+                            placeholder="Digite o valor do produto" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-3" onclick="createProduct()">Salvar Produto</button>
+                </form>
+
+                <table class="table table-hover table-bordered" id="my-table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Edit Product  Modal -->
+        <div class="modal fade" id="product-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Produto</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit-product-form" class="mt-4">
+                            <input id="edit-product-id" type="hidden" value="">
+                            <div class="mb-3">
+                                <label for="edit-product-name" class="form-label">Nome do Produto</label>
+                                <input type="text" class="form-control" id="edit-product-name" placeholder="Digite o nome do produto"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-product-value" class="form-label">Valor (R$)</label>
+                                <input type="number" step="1" class="form-control" id="edit-product-value"
+                                    placeholder="Digite o valor do produto" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="updateProduct()">Atualizar</button>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 
