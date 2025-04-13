@@ -33,3 +33,19 @@ body {
 #product-container {
     width: 80%;
 }
+
+#order-container {
+    width: 80%;
+}
+
+.table > tbody > tr.status-na_fila > td {
+    background-color: rgb(237, 93, 93) !important;
+}
+
+.table > tbody > tr.status-preparando > td {
+    background-color: rgb(240, 235, 76) !important;
+}
+
+.table > tbody > tr.status-pronto > td {
+    background-color: rgb(93, 189, 93) !important;
+}

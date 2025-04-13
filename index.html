@@ -32,14 +32,10 @@
                 </li>
 
                 <!-- Pedidos Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
-                        <i class="bi bi-list-ul"></i> <span>Pedidos</span>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" onclick="listOrders()">
+                        <i class="bi bi-box"></i> <span>Pedidos</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="#">Listar Pedidos</a></li>
-                        <li><a class="dropdown-item" href="#">Novo Pedido</a></li>
-                    </ul>
                 </li>
 
             </ul>
@@ -47,14 +43,14 @@
 
         <!-- Main content  -->
         <div id="main-content" class="p-4 flex-grow-1">
-            <!-- Home containt -->
+            <!-- Home container -->
             <div id="home-container">
                 <h1>Bem-vindo</h1>
                 <p>Este é o sistema de filas para pedidos do restaurante</p>
             </div>
 
 
-            <!-- Product List -->
+            <!-- Product container -->
             <div class="container-fluid mt-4 d-none" id="product-container">
                 <h1>Produtos</h1>
                 <br>
@@ -78,6 +74,22 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Valor</th>
                             <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+
+            <div class="container-fluid mt-4 d-none" id="order-container">
+                <h1>Pedidos</h1>
+                <br>
+                <table class="table table-hover table-bordered" id="order-table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Mesa</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Observacao</th>
+                            <th scope="col">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="table-body"></tbody>

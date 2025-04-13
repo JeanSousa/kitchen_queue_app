@@ -3,10 +3,15 @@ function toggleSidebar() {
 }
 
 
-
+/*
+    --------------------------------------------------------------------------------------
+    Home view
+    --------------------------------------------------------------------------------------
+*/
 const home = () => {
     document.getElementById('home-container').classList.remove('d-none');
-    document.getElementById('product-container').classList.add('d-none')
+    document.getElementById('product-container').classList.add('d-none');
+    document.getElementById('order-container').classList.add('d-none')
 }
 
 /*
@@ -77,6 +82,7 @@ const listProducts = async () => {
     let url = `${prefixUrl}/products`;
 
     document.getElementById('home-container').classList.add('d-none');
+    document.getElementById('order-container').classList.add('d-none');
     document.getElementById('product-container').classList.remove('d-none')
 
     try {
@@ -154,10 +160,21 @@ const editProduct = async (id) => {
     }
 }
 
+
+/*
+    --------------------------------------------------------------------------------------
+    Function to update product  
+    --------------------------------------------------------------------------------------
+*/
 const updateProduct = async () => {
     let id = document.getElementById('edit-product-id').value
     let name = document.getElementById('edit-product-name').value
     let value = document.getElementById('edit-product-value').value
+
+    if(!name || !value) {
+        alert('Preencha todos os campos!');
+        return
+    }
 
     const formData = new FormData();
     formData.append('name', name);
@@ -192,11 +209,6 @@ const updateProduct = async () => {
 }
 
 
-
-
-
-
-
 const insrtProductItem = (id = 0, name, value) => {
     const table = document.getElementById('my-table')
         .getElementsByTagName('tbody')[0];
@@ -222,3 +234,98 @@ const insrtProductItem = (id = 0, name, value) => {
     `;
 };
 
+
+
+/*
+    --------------------------------------------------------------------------------------
+    Function to get the list of orders from the server via GET request
+    --------------------------------------------------------------------------------------
+*/
+const listOrders = async () => {
+    let url = `${prefixUrl}/orders`;
+
+    document.getElementById('home-container').classList.add('d-none');
+    document.getElementById('product-container').classList.add('d-none');
+    document.getElementById('order-container').classList.remove('d-none')
+
+    try {
+        let response = await fetch(url, {method: 'get'})
+        let { orders } = await response.json()
+
+        const tableBody = document.getElementById('order-table')
+            .getElementsByTagName('tbody')[0];
+
+        tableBody.innerHTML = "";
+
+        if(!orders) {
+            alert('Não existem pedidos na base de dados');
+        }
+
+        orders.forEach(item => {
+            insertOrderItem(item.id, item.table_number, item.status, item.observation)
+        })
+
+    } catch (error) {
+        alert('Erro ao se comunicar com a base de dados!')
+        console.log(error)
+    }
+}
+
+const viewOrderProductsByOrderId = async (id) => {
+    let url = `${prefixUrl}/order-products/products/${id}`;
+
+    try {
+        let response = await fetch(url, {method: 'get'})
+        let data = await response.json()
+
+        console.log(data);
+
+        // const tableBody = document.getElementById('order-table')
+        //     .getElementsByTagName('tbody')[0];
+
+        // tableBody.innerHTML = "";
+
+        // if(!orders) {
+        //     alert('Não existem pedidos na base de dados');
+        // }
+
+        // orders.forEach(item => {
+        //     insertOrderItem(item.id, item.table_number, item.status, item.observation)
+        // })
+
+    } catch (error) {
+        alert('Erro ao se comunicar com a base de dados!')
+        console.log(error)
+    }
+}
+
+const insertOrderItem = (id = 0, table_number, status, observation) => {
+    const table = document.getElementById('order-table')
+        .getElementsByTagName('tbody')[0];
+
+    const row = table.insertRow();
+    const normalizedStatus = status.toLowerCase().replace(/\s/g, '_');
+    row.setAttribute("id", `order-${id}`);
+    // Set classe to change background color by status
+    row.setAttribute("class", `status-${normalizedStatus}`);
+
+    // Insert name and value in table
+    [table_number, status, observation].forEach(content => {
+        const cell = row.insertCell();
+        cell.textContent = content;
+    });
+
+    // Insert action buttons
+    const actionCell = row.insertCell();
+    actionCell.innerHTML = `
+        <button class="btn btn-sm btn-primary me-2" onclick="viewOrderProductsByOrderId(${id})">
+            <i class="bi bi-eye"></i>
+        </button>
+        <button class="btn btn-sm btn-primary me-2" onclick="editOrder(${id})">
+            <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-sm btn-danger" onclick="deleteOrder(${id})">
+            <i class="bi bi-trash"></i>
+        </button>
+    `;
+};
