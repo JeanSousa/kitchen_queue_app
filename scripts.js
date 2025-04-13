@@ -454,29 +454,37 @@ const viewOrderProductsByOrderId = async (id) => {
         document.getElementById('modal-order-status-text').textContent = data.status;
         document.getElementById('modal-order-observation-text').textContent = data.observation;
 
-        console.log(data);
-
+        // remove itens if exists
+        const tableBody = document.getElementById('modal-product-table')
+            .getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = "";
+        
+        // insert itens to modal table
+        data.products.forEach(item => {
+            insrtProductItemInModalTable(item.name, item.amount, item.value)
+        })
+                
         const modal = new bootstrap.Modal(document.getElementById('order-modal'));
         modal.show();
-
-        // const tableBody = document.getElementById('order-table')
-        //     .getElementsByTagName('tbody')[0];
-
-        // tableBody.innerHTML = "";
-
-        // if(!orders) {
-        //     alert('Não existem pedidos na base de dados');
-        // }
-
-        // orders.forEach(item => {
-        //     insertOrderItem(item.id, item.table_number, item.status, item.observation)
-        // })
-
     } catch (error) {
         alert('Erro ao se comunicar com a base de dados!')
         console.log(error)
     }
 }
+
+
+const insrtProductItemInModalTable = (name, quantity, value) => {
+    const table = document.getElementById('modal-product-table')
+        .getElementsByTagName('tbody')[0];
+
+    const row = table.insertRow();
+
+    // Insert name and value in table
+    [name, quantity, value].forEach(content => {
+        const cell = row.insertCell();
+        cell.textContent = content;
+    });
+};
 
 const insertOrderItem = (id = 0, table_number, status, observation) => {
     const table = document.getElementById('order-table')
