@@ -472,7 +472,11 @@ const viewOrderProductsByOrderId = async (id) => {
     }
 }
 
-
+/*
+    --------------------------------------------------------------------------------------
+    Function to insert products in table inside order modal
+    --------------------------------------------------------------------------------------
+*/
 const insrtProductItemInModalTable = (name, quantity, value) => {
     const table = document.getElementById('modal-product-table')
         .getElementsByTagName('tbody')[0];
@@ -486,6 +490,38 @@ const insrtProductItemInModalTable = (name, quantity, value) => {
     });
 };
 
+
+const editOrder = async (id) => {
+    let url = `${prefixUrl}/products/${id}`;
+
+    console.log(id)
+
+    try {
+        // let response = await fetch(url, {method: 'get'})
+        // let product = await response.json()
+
+        // if(!product) {
+        //     alert('Produto não encontrado');
+        // }
+
+        // document.getElementById('edit-product-id').value = product.id
+        // document.getElementById('edit-product-name').value = product.name
+        // document.getElementById('edit-product-value').value = product.value
+
+        const modal = new bootstrap.Modal(document.getElementById('edit-order-modal'));
+        modal.show();
+
+    } catch (error) {
+        alert('Erro ao se comunicar com a base de dados!')
+        console.log(error)
+    }
+}
+
+/*
+    --------------------------------------------------------------------------------------
+    Function to insert orders in table
+    --------------------------------------------------------------------------------------
+*/
 const insertOrderItem = (id = 0, table_number, status, observation) => {
     const table = document.getElementById('order-table')
         .getElementsByTagName('tbody')[0];
