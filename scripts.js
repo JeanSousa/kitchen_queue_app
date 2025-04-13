@@ -335,11 +335,11 @@ const addItemToOrder = () => {
     input.setAttribute('data-id', itemId);
     input.setAttribute('data-quantity', quantity);
 
-    // Botão de remover
+    // Remove button
     const btnWrapper = document.createElement('button');
     btnWrapper.className = 'btn btn-outline-danger';
     btnWrapper.type = 'button';
-    btnWrapper.innerHTML = '<i class="bi bi-x-lg"></i>';
+    btnWrapper.innerHTML = `<i class="bi bi-x-lg" id="remove-buton-${itemId}"></i>`;
     btnWrapper.onclick = () => container.removeChild(itemWrapper);
 
     itemWrapper.appendChild(input);
@@ -348,6 +348,12 @@ const addItemToOrder = () => {
     container.appendChild(itemWrapper);
 }
 
+
+/*
+    --------------------------------------------------------------------------------------
+    Function to insert orders and relationship order-products from the server via POST request
+    --------------------------------------------------------------------------------------
+*/
 const createOrder = async () => {
     const orderUrl = `${prefixUrl}/orders`;
     const orderTableNumber = document.getElementById('order-table-number').value
@@ -414,11 +420,19 @@ const createOrder = async () => {
                 return
             }
         }
+
+        // clear product itens view
+        const container = document.getElementById('selected-items');
+        container.innerHTML = '';
+
+        alert('Pedido cadastrado com sucesso!')
     } catch (error) {
         alert('Erro ao se comunicar com a base de dados!')
         insertOrderItem(null, orderTableNumber, orderStatus, orderObservation)
         document.getElementById('order-table-number').value = ""
         document.getElementById('order-observation').value = ""
+        const container = document.getElementById('selected-items');
+        container.innerHTML = '';
         console.log(error)
     }
 }
