@@ -362,7 +362,12 @@ const createOrder = async () => {
     const products = document.getElementsByClassName('order-product-items')
 
     if(!orderTableNumber || !orderStatus) {
-        alert('Preencha todos os campos!');
+        alert('Preencha todos os campos obrigatórios!');
+        return
+    }
+
+    if (products.length == 0) {
+        alert('Adicione produtos ao seu pedido no botão + ')
         return
     }
 
@@ -492,21 +497,25 @@ const insrtProductItemInModalTable = (name, quantity, value) => {
 
 
 const editOrder = async (id) => {
-    let url = `${prefixUrl}/products/${id}`;
-
-    console.log(id)
+    let url = `${prefixUrl}/order-products/products/${id}`;
 
     try {
-        // let response = await fetch(url, {method: 'get'})
-        // let product = await response.json()
+        let response = await fetch(url, {method: 'get'})
+        let data = await response.json()
 
-        // if(!product) {
-        //     alert('Produto não encontrado');
-        // }
+        document.getElementById('edit-order-table-number').value = data.table_number;
+        document.getElementById('edit-order-status').value = data.status;
+        document.getElementById('edit-order-observation').value = data.observation;
 
-        // document.getElementById('edit-product-id').value = product.id
-        // document.getElementById('edit-product-name').value = product.name
-        // document.getElementById('edit-product-value').value = product.value
+        let productUrl = `${prefixUrl}/products`
+        let productsResponse = await fetch(productUrl, {method: 'get'})
+        let { products } = await productsResponse.json()
+
+        if(!products) {
+            alert('Não existem produtos na base de dados');
+        }
+
+        products.forEach(item => {insrtProductItemInModalSelectField(item.id, item.name)})
 
         const modal = new bootstrap.Modal(document.getElementById('edit-order-modal'));
         modal.show();
@@ -515,6 +524,20 @@ const editOrder = async (id) => {
         alert('Erro ao se comunicar com a base de dados!')
         console.log(error)
     }
+}
+
+
+/*
+    --------------------------------------------------------------------------------------
+    Function inserts products in select field
+    --------------------------------------------------------------------------------------
+*/
+const insrtProductItemInModalSelectField = (id, name) => {
+    const select = document.getElementById('edit-order-itens');
+    const option = document.createElement('option');
+    option.value = id;
+    option.textContent = name;
+    select.appendChild(option);
 }
 
 /*

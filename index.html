@@ -103,7 +103,7 @@
                     <div class="mb-3">
                         <label for="order-observation" class="form-label">Observação</label>
                         <input type="text" class="form-control" id="order-observation"
-                            placeholder="Digite a observacao do pedido" required=false>
+                            placeholder="Digite a observacao do pedido">
                     </div>
 
                     <div class="mb-3">
@@ -240,19 +240,16 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- PAREI AQUI TENHO QUE AJUSTAR BOTÃO DE SALVAR, IDS DOS CAMPOS E TRAZER PREENCHIDOS
-                        PARA EDITAR AQUI -->
-
-                        <form id="order-form" class="mt-4">
+                        <form id="edit-order-form" class="mt-4">
                             <div class="mb-3">
-                                <label for="order-table-number" class="form-label">Mesa do pedido</label>
-                                <input type="number" step="1" class="form-control" id="order-table-number"
+                                <label for="edit-order-table-number" class="form-label">Mesa do pedido</label>
+                                <input type="number" step="1" class="form-control" id="edit-order-table-number"
                                     placeholder="Digite a mesa do pedido" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="order-status" class="form-label">Status</label>
-                                <select class="form-select" id="order-status" aria-label="Default select example">
+                                <label for="edit-order-status" class="form-label">Status</label>
+                                <select class="form-select" id="edit-order-status" aria-label="Default select example">
                                     <option value="NA_FILA">NA FILA</option>
                                     <option value="PREPARANDO">PREPARANDO</option>
                                     <option value="PRONTO">PRONTO</option>
@@ -260,35 +257,33 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="order-observation" class="form-label">Observação</label>
-                                <input type="text" class="form-control" id="order-observation"
+                                <label for="edit-order-observation" class="form-label">Observação</label>
+                                <input type="text" class="form-control" id="edit-order-observation"
                                     placeholder="Digite a observacao do pedido" required=false>
                             </div>
 
                             <div class="mb-3">
-                                <label for="order-item" class="form-label">Itens</label>
+                                <label for="edit-order-itens" class="form-label">Itens</label>
                                 <div class="d-flex gap-2 align-items-center">
-                                    <select class="form-select w-50" id="order-item" aria-label="Selecione o item">
+                                    <select class="form-select w-50" id="edit-order-itens" aria-label="Selecione o item">
                                         <option selected disabled>Selecione um item</option>
                                     </select>
 
-                                    <input type="number" class="form-control w-25" onclick="insertProductInOrder()"
+                                    <input type="number" class="form-control w-25" onclick="insertProductInModalOrder()"
                                         id="order-quantity" min="1" value="1" placeholder="Qtd">
 
-                                    <button type="button" class="btn btn-success" onclick="addItemToOrder()">
+                                    <button type="button" class="btn btn-success" onclick="addItemToModalOrder()">
                                         <i class="bi bi-plus-lg"></i>
                                     </button>
                                 </div>
                             </div>
 
                             <div id="selected-items" class="mb-3"></div>
-
-                            <button type="submit" class="btn btn-primary mb-3" onclick="createOrder()">Salvar
-                                Pedido</button>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="updateOrder()">Atualizar</button>
                     </div>
                 </div>
             </div>
