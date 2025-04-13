@@ -507,6 +507,10 @@ const editOrder = async (id) => {
         document.getElementById('edit-order-status').value = data.status;
         document.getElementById('edit-order-observation').value = data.observation;
 
+        data.products.forEach(item => {
+            insrtProductItemInEditModalTable(item.name, item.amount, item.value)
+        })
+
         let productUrl = `${prefixUrl}/products`
         let productsResponse = await fetch(productUrl, {method: 'get'})
         let { products } = await productsResponse.json()
@@ -567,6 +571,20 @@ const addItemToModalOrder = () => {
 
     container.appendChild(itemWrapper);
 }
+
+
+const insrtProductItemInEditModalTable = (name, quantity, value) => {
+    const table = document.getElementById('modal-already-product-table')
+        .getElementsByTagName('tbody')[0];
+
+    const row = table.insertRow();
+
+    // Insert name and value in table
+    [name, quantity, value].forEach(content => {
+        const cell = row.insertCell();
+        cell.textContent = content;
+    });
+};
 
 
 /*
