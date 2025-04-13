@@ -392,8 +392,6 @@ const createOrder = async () => {
         }
         
         const {id, table_number, status, observation} = data
-
-        console.log('ID PEDIDO', id)
     
         document.getElementById('order-table-number').value = ""
         document.getElementById('order-observation').value = ""
@@ -495,7 +493,11 @@ const insrtProductItemInModalTable = (name, quantity, value) => {
     });
 };
 
-
+/*
+    --------------------------------------------------------------------------------------
+    Function show modal to edit order
+    --------------------------------------------------------------------------------------
+*/
 const editOrder = async (id) => {
     let url = `${prefixUrl}/order-products/products/${id}`;
 
@@ -503,6 +505,7 @@ const editOrder = async (id) => {
         let response = await fetch(url, {method: 'get'})
         let data = await response.json()
 
+        document.getElementById('edit-order-id').value = data.order_id
         document.getElementById('edit-order-table-number').value = data.table_number;
         document.getElementById('edit-order-status').value = data.status;
         document.getElementById('edit-order-observation').value = data.observation;
@@ -530,7 +533,89 @@ const editOrder = async (id) => {
     }
 }
 
+/*
+    --------------------------------------------------------------------------------------
+    Function to update the list of orders and products from the server via PUT request
+    --------------------------------------------------------------------------------------
+*/
+const updateOrder = async () => {
+    const id = document.getElementById('edit-order-id').value
+    const tableNumber = document.getElementById('edit-order-table-number').value
+    const status = document.getElementById('edit-order-status').value
+    const observation = document.getElementById('edit-order-observation').value
+    const products = document.getElementsByClassName('order-product-items')
 
+    if(!tableNumber || !status) {
+        alert('Preencha todos os campos!');
+        return
+    }
+
+    const formData = new FormData();
+    formData.append('table_number', tableNumber);
+    formData.append('status', status);
+    formData.append('observation', observation);
+
+    let url = `${prefixUrl}/orders/${id}`;
+
+    try {
+        let response = await fetch(url, 
+            {
+                method: 'put',
+                body: formData
+            }
+        )
+
+        let data = await response.json()
+
+        if (data.message) {
+            alert(data.message)
+            return
+        }
+
+        for (let i = 0; i < products.length; i++) {
+            let productId = products[i].dataset.id
+            let productQuantity = products[i].dataset.quantity
+            
+            const orderProductsFormdata = new FormData();
+            orderProductsFormdata.append('order_id', id);
+            orderProductsFormdata.append('product_id', productId);
+            orderProductsFormdata.append('amount', productQuantity);
+
+            let productOrderUrl = `${prefixUrl}/order-products`
+
+            let response = await fetch(productOrderUrl, 
+                {
+                    method: 'post',
+                    body: orderProductsFormdata,
+                }
+            )
+    
+            const data = await response.json()
+
+            if (data.message) {
+                alert(data.message)
+                return
+            }
+        }
+    
+        alert('Pedido atualizado com sucesso!')
+
+        let orderModal = document.getElementById('edit-order-modal');
+        let modal = bootstrap.Modal.getOrCreateInstance(orderModal);
+        modal.hide();
+
+        return listOrders()
+    } catch (error) {
+        alert('Erro ao se comunicar com a base de dados!')
+        console.log(error)
+    }
+}
+
+/*
+    --------------------------------------------------------------------------------------
+    Function add item to modal order
+    --------------------------------------------------------------------------------------
+*/
 const addItemToModalOrder = () => {
     const select = document.getElementById('edit-order-itens');
     const quantityInput = document.getElementById('edit-order-quantity');
@@ -572,7 +657,11 @@ const addItemToModalOrder = () => {
     container.appendChild(itemWrapper);
 }
 
-
+/*
+    --------------------------------------------------------------------------------------
+    Function insert item to tabel in edit modal
+    --------------------------------------------------------------------------------------
+*/
 const insrtProductItemInEditModalTable = (name, quantity, value) => {
     const table = document.getElementById('modal-already-product-table')
         .getElementsByTagName('tbody')[0];
