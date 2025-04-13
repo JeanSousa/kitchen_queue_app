@@ -1,6 +1,12 @@
+/*
+    --------------------------------------------------------------------------------------
+    Toggleside Bar
+    --------------------------------------------------------------------------------------
+*/
 function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('collapsed');
 }
+
 
 
 /*
@@ -13,6 +19,10 @@ const home = () => {
     document.getElementById('product-container').classList.add('d-none');
     document.getElementById('order-container').classList.add('d-none')
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    home();
+});
 
 /*
     --------------------------------------------------------------------------------------
