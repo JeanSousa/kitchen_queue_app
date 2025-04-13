@@ -18,32 +18,37 @@ e também [Google Chrome](https://www.google.pt/intl/pt-PT/chrome/?brand=CHBD&ds
 
 ### Backend 
 
+Para o funcionamento da aplicação por completo é indispensável que o backend seja executado na porta 5000
+onde receberá as requisições deste projeto. Por exemplo no endpoint de produtos abaixo:
+
+#### http://127.0.0.1:5000/api
+
 
 ## ⚙️ Executando o projeto
 
 Para executar o projeto deve-se abri-lo com navegador e ele será executado no path de sua máquina local.
 Ao abrir no navegador iremos nos deparar com a seguinte pagina Home da aplicação:
 
-![Pagina Home](assets/images/select_documentation.png)
+![Pagina Home](assets/img/kitchen_app_home.png)
 
 Ao selecionar produtos no menu lateral esquerdo, teremos a seguinte tela onde é possivel inserir os produtos, editar e
 excluir de acordo com os ícones da coluna de ações:
 
-![Documentação Swagger da API](assets/images/swagger_documentation.png)
+![Pagina Produtos](assets/img/kitchen_app_products.png)
 
 Ao selecionar pedidos no menu lateral esquerdo, teremos a seguinte tela onde é possivel inserir os pedidos, visualizar
 os produtos editar e excluir de acordo com os ícones da coluna de ações:
 
-![Documentação Swagger da API](assets/images/swagger_documentation.png)
+![Pagina Pedidos](assets/img/kitchen_app_orders.png)
 
 
 ## 🛠️ Construído com
 
 Algumas ferramentas para a construção do projeto :
 
-* [Html](http://www.dropwizard.io/1.0.2/docs/) - O framework web usado
-* [CSS](https://pip.pypa.io/en/stable/getting-started/) - Gerenciador de Dependências
-* [Javascript](https://pip.pypa.io/en/stable/getting-started/) - Gerenciador de Dependências
+* [Html](https://developer.mozilla.org/pt-BR/docs/Web/HTML) - Linguagem de marcação e hipertexto
+* [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS) - Folhas de estilo em cascata
+* [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) - Linguagem de programação
 
 
 
