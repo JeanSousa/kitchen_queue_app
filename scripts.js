@@ -209,6 +209,11 @@ const updateProduct = async () => {
 }
 
 
+/*
+    --------------------------------------------------------------------------------------
+    Function insert products in table 
+    --------------------------------------------------------------------------------------
+*/
 const insrtProductItem = (id = 0, name, value) => {
     const table = document.getElementById('my-table')
         .getElementsByTagName('tbody')[0];
@@ -261,6 +266,17 @@ const listOrders = async () => {
             alert('Não existem pedidos na base de dados');
         }
 
+        let productUrl = `${prefixUrl}/products`
+
+        let productsResponse = await fetch(productUrl, {method: 'get'})
+        let { products } = await productsResponse.json()
+
+        if(!products) {
+            alert('Não existem produtos na base de dados');
+        }
+
+        products.forEach(item => {insrtProductItemInSelectField(item.id, item.name)})
+
         orders.forEach(item => {
             insertOrderItem(item.id, item.table_number, item.status, item.observation)
         })
@@ -271,6 +287,83 @@ const listOrders = async () => {
     }
 }
 
+
+/*
+    --------------------------------------------------------------------------------------
+    Function inserts products in select field
+    --------------------------------------------------------------------------------------
+*/
+const insrtProductItemInSelectField = (id, name) => {
+    const select = document.getElementById('order-item');
+    const option = document.createElement('option');
+    option.value = id;
+    option.textContent = name;
+    select.appendChild(option);
+}
+
+
+/*
+    --------------------------------------------------------------------------------------
+    Function inserts inputs in a order
+    --------------------------------------------------------------------------------------
+*/
+const addItemToOrder = () => {
+    const select = document.getElementById('order-item');
+    const quantityInput = document.getElementById('order-quantity');
+    const container = document.getElementById('selected-items');
+
+    const selectedOption = select.options[select.selectedIndex];
+    const itemName = selectedOption.text;
+    const itemId = selectedOption.value;
+    const quantity = quantityInput.value;
+
+    if (!itemId || quantity < 1) {
+        alert('A quantidade do item deve ser maior ou igual a 1')
+        return 
+    } 
+
+    // Create wrapper to item
+    const itemWrapper = document.createElement('div');
+    itemWrapper.className = 'input-group mb-2';
+
+    // Field readonly
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'form-control order-product-items';
+    input.value = `${itemName} (Qtd: ${quantity})`;
+    input.readOnly = true;
+    input.setAttribute('data-id', itemId);
+    input.setAttribute('data-quantity', quantity);
+
+    // Botão de remover
+    const btnWrapper = document.createElement('button');
+    btnWrapper.className = 'btn btn-outline-danger';
+    btnWrapper.type = 'button';
+    btnWrapper.innerHTML = '<i class="bi bi-x-lg"></i>';
+    btnWrapper.onclick = () => container.removeChild(itemWrapper);
+
+    itemWrapper.appendChild(input);
+    itemWrapper.appendChild(btnWrapper);
+
+    container.appendChild(itemWrapper);
+}
+
+const createOrder = async () => {
+    let tableNumber = document.getElementById('order-table-number').value
+    let status = document.getElementById('order-status').value
+    let observation = document.getElementById('order-observation').value
+
+    // let items = document.getElementsByClassName('')
+
+    console.log(tableNumber, status, observation)
+}
+
+
+/*
+    --------------------------------------------------------------------------------------
+    Function to get the list of orders products from the server via GET request
+    --------------------------------------------------------------------------------------
+*/
 const viewOrderProductsByOrderId = async (id) => {
     let url = `${prefixUrl}/order-products/products/${id}`;
 

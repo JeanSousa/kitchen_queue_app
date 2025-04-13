@@ -104,6 +104,23 @@
                         <input type="text" class="form-control" id="order-observation" 
                             placeholder="Digite a observacao do pedido"required=false>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="order-item" class="form-label">Itens</label>
+                        <div class="d-flex gap-2 align-items-center">
+                            <select class="form-select w-50" id="order-item" aria-label="Selecione o item">
+                                <option selected disabled>Selecione um item</option>
+                            </select>
+                            
+                            <input type="number" class="form-control w-25" onclick="insertProductInOrder()" id="order-quantity" min="1" value="1" placeholder="Qtd">
+                            
+                            <button type="button" class="btn btn-success" onclick="addItemToOrder()">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="selected-items" class="mb-3"></div>
                     
                     <button type="submit" class="btn btn-primary mb-3" onclick="createOrder()">Salvar Pedido</button>
                 </form>
