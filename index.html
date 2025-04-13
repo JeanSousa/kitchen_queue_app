@@ -24,14 +24,14 @@
                     </a>
                 </li>
 
-                <!-- Produtos Dropdown -->
+                <!-- Produtos -->
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#" onclick="listProducts()">
                         <i class="bi bi-box"></i> <span>Produtos</span>
                     </a>
                 </li>
 
-                <!-- Pedidos Dropdown -->
+                <!-- Pedidos -->
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#" onclick="listOrders()">
                         <i class="bi bi-journal-check"></i> <span>Pedidos</span>
@@ -166,6 +166,64 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" onclick="updateProduct()">Atualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Order Modal -->
+        <div class="modal fade" id="order-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Pedido / Itens</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item">
+                                <strong>Número da Mesa:</strong> <span id="modal-order-table-text"></span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Status:</strong> <span id="modal-order-status-text"></span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Observação:</strong> <span id="modal-order-observation-text"></span>
+                            </li>
+                        </ul>
+
+                        <strong>Produtos</strong> 
+
+                        <table class="table table-hover table-bordered mt-3" id="modal-product-table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Quantidade</th>
+                                    <th scope="col">Valor Unitario</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-product-table-body"></tbody>
+                        </table>
+
+                        
+                        <!-- <form id="edit-order-form" class="mt-4">
+                            <input id="edit-product-id" type="hidden" value="">
+                            <div class="mb-3">
+                                <label for="modal-order-table" class="form-label">Numero Mesa</label>
+                                <input type="number" step="1" class="form-control" id="modal-order-table" readonly="true">
+                            </div>
+                            <div class="mb-3">
+                                <label for="modal-order-status" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="modal-order-status" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="modal-order-observation" class="form-label">Observation</label>
+                                <input type="text" class="form-control" id="modal-order-observation" readonly>
+                            </div>
+                        </form> -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

@@ -450,7 +450,14 @@ const viewOrderProductsByOrderId = async (id) => {
         let response = await fetch(url, {method: 'get'})
         let data = await response.json()
 
+        document.getElementById('modal-order-table-text').textContent = data.table_number;
+        document.getElementById('modal-order-status-text').textContent = data.status;
+        document.getElementById('modal-order-observation-text').textContent = data.observation;
+
         console.log(data);
+
+        const modal = new bootstrap.Modal(document.getElementById('order-modal'));
+        modal.show();
 
         // const tableBody = document.getElementById('order-table')
         //     .getElementsByTagName('tbody')[0];
