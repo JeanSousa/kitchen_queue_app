@@ -611,6 +611,28 @@ const updateOrder = async () => {
     }
 }
 
+
+const deleteOrder = async (id) => {
+    let url = `${prefixUrl}/orders/${id}`;
+
+    try {
+        let response = await fetch(url, {method: 'delete'})
+
+        let data = await response.json()
+
+        if (data.message) {
+            alert(`Pedido ${data.name} deletado com sucesso!`);
+        }
+
+        document.getElementById(`order-${id}`).remove()    
+    } catch (error) {
+        alert('Erro ao se comunicar com a base de dados!')
+        document.getElementById(`order-${id}`).remove()
+        console.log(error)
+    }
+}
+
+
 /*
     --------------------------------------------------------------------------------------
     Function add item to modal order
