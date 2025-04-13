@@ -527,6 +527,48 @@ const editOrder = async (id) => {
 }
 
 
+const addItemToModalOrder = () => {
+    const select = document.getElementById('edit-order-itens');
+    const quantityInput = document.getElementById('edit-order-quantity');
+    const container = document.getElementById('modal-selected-items');
+
+    const selectedOption = select.options[select.selectedIndex];
+    const itemName = selectedOption.text;
+    const itemId = selectedOption.value;
+    const quantity = quantityInput.value;
+
+    if (!itemId || quantity < 1) {
+        alert('A quantidade do item deve ser maior ou igual a 1')
+        return 
+    } 
+
+    // Create wrapper to item
+    const itemWrapper = document.createElement('div');
+    itemWrapper.className = 'input-group mb-2';
+
+    // Field readonly
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'form-control order-product-items';
+    input.value = `${itemName} (Qtd: ${quantity})`;
+    input.readOnly = true;
+    input.setAttribute('data-id', itemId);
+    input.setAttribute('data-quantity', quantity);
+
+    // Remove button
+    const btnWrapper = document.createElement('button');
+    btnWrapper.className = 'btn btn-outline-danger';
+    btnWrapper.type = 'button';
+    btnWrapper.innerHTML = `<i class="bi bi-x-lg" id="remove-buton-${itemId}"></i>`;
+    btnWrapper.onclick = () => container.removeChild(itemWrapper);
+
+    itemWrapper.appendChild(input);
+    itemWrapper.appendChild(btnWrapper);
+
+    container.appendChild(itemWrapper);
+}
+
+
 /*
     --------------------------------------------------------------------------------------
     Function inserts products in select field

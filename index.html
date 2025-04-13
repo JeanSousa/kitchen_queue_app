@@ -205,23 +205,6 @@
                             </thead>
                             <tbody id="modal-product-table-body"></tbody>
                         </table>
-
-
-                        <!-- <form id="edit-order-form" class="mt-4">
-                            <input id="edit-product-id" type="hidden" value="">
-                            <div class="mb-3">
-                                <label for="modal-order-table" class="form-label">Numero Mesa</label>
-                                <input type="number" step="1" class="form-control" id="modal-order-table" readonly="true">
-                            </div>
-                            <div class="mb-3">
-                                <label for="modal-order-status" class="form-label">Status</label>
-                                <input type="text" class="form-control" id="modal-order-status" readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label for="modal-order-observation" class="form-label">Observation</label>
-                                <input type="text" class="form-control" id="modal-order-observation" readonly>
-                            </div>
-                        </form> -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -270,7 +253,7 @@
                                     </select>
 
                                     <input type="number" class="form-control w-25" onclick="insertProductInModalOrder()"
-                                        id="order-quantity" min="1" value="1" placeholder="Qtd">
+                                        id="edit-order-quantity" min="1" value="1" placeholder="Qtd">
 
                                     <button type="button" class="btn btn-success" onclick="addItemToModalOrder()">
                                         <i class="bi bi-plus-lg"></i>
@@ -278,7 +261,21 @@
                                 </div>
                             </div>
 
-                            <div id="selected-items" class="mb-3"></div>
+                            <div id="modal-selected-items" class="mb-3"></div>
+
+                            <strong>Produtos Já existentes no pedido</strong>
+
+                            <table class="table table-hover table-bordered mt-3" id="modal-already-product-table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Quantidade</th>
+                                        <th scope="col">Valor Unitario</th>
+                                        <th scope="col">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="modal-already-product-table-body"></tbody>
+                            </table>
                         </form>
                     </div>
                     <div class="modal-footer">
