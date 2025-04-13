@@ -102,8 +102,8 @@
 
                     <div class="mb-3">
                         <label for="order-observation" class="form-label">Observação</label>
-                        <input type="text" class="form-control" id="order-observation" 
-                            placeholder="Digite a observacao do pedido"required=false>
+                        <input type="text" class="form-control" id="order-observation"
+                            placeholder="Digite a observacao do pedido" required=false>
                     </div>
 
                     <div class="mb-3">
@@ -112,9 +112,10 @@
                             <select class="form-select w-50" id="order-item" aria-label="Selecione o item">
                                 <option selected disabled>Selecione um item</option>
                             </select>
-                            
-                            <input type="number" class="form-control w-25" onclick="insertProductInOrder()" id="order-quantity" min="1" value="1" placeholder="Qtd">
-                            
+
+                            <input type="number" class="form-control w-25" onclick="insertProductInOrder()"
+                                id="order-quantity" min="1" value="1" placeholder="Qtd">
+
                             <button type="button" class="btn btn-success" onclick="addItemToOrder()">
                                 <i class="bi bi-plus-lg"></i>
                             </button>
@@ -122,7 +123,7 @@
                     </div>
 
                     <div id="selected-items" class="mb-3"></div>
-                    
+
                     <button type="submit" class="btn btn-primary mb-3" onclick="createOrder()">Salvar Pedido</button>
                 </form>
                 <br>
@@ -153,8 +154,8 @@
                             <input id="edit-product-id" type="hidden" value="">
                             <div class="mb-3">
                                 <label for="edit-product-name" class="form-label">Nome do Produto</label>
-                                <input type="text" class="form-control" id="edit-product-name" placeholder="Digite o nome do produto"
-                                    required>
+                                <input type="text" class="form-control" id="edit-product-name"
+                                    placeholder="Digite o nome do produto" required>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-product-value" class="form-label">Valor (R$)</label>
@@ -192,7 +193,7 @@
                             </li>
                         </ul>
 
-                        <strong>Produtos</strong> 
+                        <strong>Produtos</strong>
 
                         <table class="table table-hover table-bordered mt-3" id="modal-product-table">
                             <thead class="table-dark">
@@ -205,7 +206,7 @@
                             <tbody id="modal-product-table-body"></tbody>
                         </table>
 
-                        
+
                         <!-- <form id="edit-order-form" class="mt-4">
                             <input id="edit-product-id" type="hidden" value="">
                             <div class="mb-3">
@@ -230,29 +231,61 @@
         </div>
 
         <!-- Edit Order Modal -->
-        <div class="modal fade" id="edit-order-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="edit-order-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Pedido</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">                   
-                        <!-- <form id="edit-order-form" class="mt-4">
-                            <input id="edit-product-id" type="hidden" value="">
+                    <div class="modal-body">
+                        <!-- PAREI AQUI TENHO QUE AJUSTAR BOTÃO DE SALVAR, IDS DOS CAMPOS E TRAZER PREENCHIDOS
+                        PARA EDITAR AQUI -->
+
+                        <form id="order-form" class="mt-4">
                             <div class="mb-3">
-                                <label for="modal-order-table" class="form-label">Numero Mesa</label>
-                                <input type="number" step="1" class="form-control" id="modal-order-table" readonly="true">
+                                <label for="order-table-number" class="form-label">Mesa do pedido</label>
+                                <input type="number" step="1" class="form-control" id="order-table-number"
+                                    placeholder="Digite a mesa do pedido" required>
                             </div>
+
                             <div class="mb-3">
-                                <label for="modal-order-status" class="form-label">Status</label>
-                                <input type="text" class="form-control" id="modal-order-status" readonly>
+                                <label for="order-status" class="form-label">Status</label>
+                                <select class="form-select" id="order-status" aria-label="Default select example">
+                                    <option value="NA_FILA">NA FILA</option>
+                                    <option value="PREPARANDO">PREPARANDO</option>
+                                    <option value="PRONTO">PRONTO</option>
+                                </select>
                             </div>
+
                             <div class="mb-3">
-                                <label for="modal-order-observation" class="form-label">Observation</label>
-                                <input type="text" class="form-control" id="modal-order-observation" readonly>
+                                <label for="order-observation" class="form-label">Observação</label>
+                                <input type="text" class="form-control" id="order-observation"
+                                    placeholder="Digite a observacao do pedido" required=false>
                             </div>
-                        </form> -->
+
+                            <div class="mb-3">
+                                <label for="order-item" class="form-label">Itens</label>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <select class="form-select w-50" id="order-item" aria-label="Selecione o item">
+                                        <option selected disabled>Selecione um item</option>
+                                    </select>
+
+                                    <input type="number" class="form-control w-25" onclick="insertProductInOrder()"
+                                        id="order-quantity" min="1" value="1" placeholder="Qtd">
+
+                                    <button type="button" class="btn btn-success" onclick="addItemToOrder()">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="selected-items" class="mb-3"></div>
+
+                            <button type="submit" class="btn btn-primary mb-3" onclick="createOrder()">Salvar
+                                Pedido</button>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
