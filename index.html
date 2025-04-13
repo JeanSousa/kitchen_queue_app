@@ -44,7 +44,7 @@
         <!-- Main content  -->
         <div id="main-content" class="p-4 flex-grow-1">
             <!-- Home container -->
-            <div id="home-container">
+            <div class="container-fluid mt-4 d-none" id="home-container">
                 <h1>Bem-vindo</h1>
                 <p>Este é o sistema de filas para pedidos do restaurante</p>
             </div>
@@ -82,6 +82,31 @@
 
             <div class="container-fluid mt-4 d-none" id="order-container">
                 <h1>Pedidos</h1>
+                <br>
+                <form id="order-form" class="mt-4">
+                    <div class="mb-3">
+                        <label for="order-table-number" class="form-label">Mesa do pedido</label>
+                        <input type="number" step="1" class="form-control" id="order-table-number"
+                            placeholder="Digite a mesa do pedido" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="order-status" class="form-label">Status</label>
+                        <select class="form-select" id="order-status" aria-label="Default select example">
+                            <option value="NA_FILA">NA FILA</option>
+                            <option value="PREPARANDO">PREPARANDO</option>
+                            <option value="PRONTO">PRONTO</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="order-observation" class="form-label">Observação</label>
+                        <input type="text" class="form-control" id="order-observation" 
+                            placeholder="Digite a observacao do pedido"required=false>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary mb-3" onclick="createOrder()">Salvar Pedido</button>
+                </form>
                 <br>
                 <table class="table table-hover table-bordered" id="order-table">
                     <thead class="table-dark">
