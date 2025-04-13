@@ -349,13 +349,78 @@ const addItemToOrder = () => {
 }
 
 const createOrder = async () => {
-    let tableNumber = document.getElementById('order-table-number').value
-    let status = document.getElementById('order-status').value
-    let observation = document.getElementById('order-observation').value
+    const orderUrl = `${prefixUrl}/orders`;
+    const orderTableNumber = document.getElementById('order-table-number').value
+    const orderStatus = document.getElementById('order-status').value
+    const orderObservation = document.getElementById('order-observation').value
+    const products = document.getElementsByClassName('order-product-items')
 
-    // let items = document.getElementsByClassName('')
+    if(!orderTableNumber || !orderStatus) {
+        alert('Preencha todos os campos!');
+        return
+    }
 
-    console.log(tableNumber, status, observation)
+    const formData = new FormData();
+    formData.append('table_number', orderTableNumber);
+    formData.append('status', orderStatus);
+    formData.append('observation', orderObservation);
+
+    try {
+        let response = await fetch(orderUrl, 
+            {
+                method: 'post',
+                body: formData,
+            }
+        )
+
+        const data = await response.json()
+        
+        if (data.message) {
+            alert(data.message)
+            return
+        }
+        
+        const {id, table_number, status, observation} = data
+
+        console.log('ID PEDIDO', id)
+    
+        document.getElementById('order-table-number').value = ""
+        document.getElementById('order-observation').value = ""
+    
+        insertOrderItem(id, table_number, status, observation)
+
+        for (let i = 0; i < products.length; i++) {
+            let productId = products[i].dataset.id
+            let productQuantity = products[i].dataset.quantity
+            
+            const orderProductsFormdata = new FormData();
+            orderProductsFormdata.append('order_id', id);
+            orderProductsFormdata.append('product_id', productId);
+            orderProductsFormdata.append('amount', productQuantity);
+
+            let productOrderUrl = `${prefixUrl}/order-products`
+
+            let response = await fetch(productOrderUrl, 
+                {
+                    method: 'post',
+                    body: orderProductsFormdata,
+                }
+            )
+    
+            const data = await response.json()
+
+            if (data.message) {
+                alert(data.message)
+                return
+            }
+        }
+    } catch (error) {
+        alert('Erro ao se comunicar com a base de dados!')
+        insertOrderItem(null, orderTableNumber, orderStatus, orderObservation)
+        document.getElementById('order-table-number').value = ""
+        document.getElementById('order-observation').value = ""
+        console.log(error)
+    }
 }
 
 
